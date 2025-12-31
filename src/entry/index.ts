@@ -14,4 +14,6 @@ export async function auditPackage(projectRoot: string, savePath: string) {
   const packageJson = await parseProject(projectRoot);
   // 3. 生成package.json和lock文件
   await generateLock(workDirPath, packageJson);
+  // 4. 对工作目录进行审计
+  const auditResult = 1;
 }
