@@ -2,7 +2,8 @@ import { audit } from "../audit";
 import { generateLock } from "../generateLock";
 import { parseProject } from "../parseProject";
 import { render } from "../render";
-import { createWorkDir } from "../workDir";
+import { createWorkDir, deleteWorkDir } from "../workDir";
+import fs from "fs";
 
 /**
  * 根据项目根目录，审计项目中所有的包（含项目本身）
@@ -20,4 +21,8 @@ export async function auditPackage(projectRoot: string, savePath: string) {
   const auditResult = await audit(workDirPath, packageJson);
   // 5. 将审计结果渲染成markdom格式
   const renderdResult = await render(auditResult, packageJson);
+  // 6. 删除工作目录
+  await deleteWorkDir(workDirPath);
+  // 7. 将结果保存至指定目录
+  await fs.promises.writeFile(savePath, renderdResult as any);
 }
