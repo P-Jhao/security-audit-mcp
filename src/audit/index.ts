@@ -15,9 +15,9 @@ export async function audit(workDirPath: string, packageJson: any) {
       current.severity
     ].unshift(current);
   }
-  //添加汇总信息
+  // 添加汇总信息
   normalizeResult.summary = {
-    total: Object.keys(normalizeResult.vulnerabilities).reduce(
+    total: Object.values(normalizeResult.vulnerabilities).reduce(
       (sum, arr) => sum + arr.length,
       0
     ),
