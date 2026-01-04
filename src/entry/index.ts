@@ -1,6 +1,7 @@
 import { audit } from "../audit";
 import { generateLock } from "../generateLock";
 import { parseProject } from "../parseProject";
+import { render } from "../render";
 import { createWorkDir } from "../workDir";
 
 /**
@@ -17,4 +18,6 @@ export async function auditPackage(projectRoot: string, savePath: string) {
   await generateLock(workDirPath, packageJson);
   // 4. 对工作目录进行审计
   const auditResult = await audit(workDirPath, packageJson);
+  // 5. 将审计结果渲染成markdom格式
+  const renderdResult = await render(auditResult, packageJson);
 }
