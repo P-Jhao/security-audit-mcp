@@ -38,6 +38,7 @@ function _normalizeVulnerabilities(auditResult: AuditResultType) {
 
 export function normalizeAuditResult(auditResult: AuditResultType) {
   return {
+    summary: {} as any,
     vulnerabilities: _normalizeVulnerabilities(auditResult),
   };
 }
