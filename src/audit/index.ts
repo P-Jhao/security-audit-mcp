@@ -24,5 +24,5 @@ export async function audit(workDirPath: string, packageJson: any) {
     moderate: normalizeResult.vulnerabilities.moderate.length,
     low: normalizeResult.vulnerabilities.low.length,
   };
-  return normalizeAuditResult;
+  return normalizeResult;
 }
