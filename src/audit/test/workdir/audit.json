@@ -4,21 +4,17 @@
     "@intervolga/optimize-cssnano-plugin": {
       "name": "@intervolga/optimize-cssnano-plugin",
       "severity": "moderate",
-      //是否直接依赖
       "isDirect": false,
-      // 漏洞怎么来的
       "via": [
         "cssnano",
         "cssnano-preset-default",
         "postcss",
         "webpack"
       ],
-      //会影响到什么包，也就是说什么包依赖了这个包
       "effects": [
         "@vue/cli-service"
       ],
       "range": "*",
-      //漏洞的路径，因为可能有多个版本就有多个路径，因此是数组
       "nodes": [
         "node_modules/@intervolga/optimize-cssnano-plugin"
       ],
@@ -225,25 +221,19 @@
     },
     "axios": {
       "name": "axios",
-      //漏洞的最高级别
       "severity": "high",
       "isDirect": true,
       "via": [
         {
-          //npm 官方的漏洞编号ID
           "source": 1097679,
           "name": "axios",
           "dependency": "axios",
           "title": "Axios Cross-Site Request Forgery Vulnerability",
-          //漏洞的详细信息地址
           "url": "https://github.com/advisories/GHSA-wf5p-g6vw-rhxx",
-          //当前漏洞级别
           "severity": "moderate",
-          // 漏洞类型编号，可以通过编号知道漏洞是如何产生的，会造成什么影响
           "cwe": [
             "CWE-352"
           ],
-          //漏洞严重性评分
           "cvss": {
             "score": 6.5,
             "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N"

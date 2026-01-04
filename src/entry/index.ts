@@ -1,3 +1,4 @@
+import { audit } from "../audit";
 import { generateLock } from "../generateLock";
 import { parseProject } from "../parseProject";
 import { createWorkDir } from "../workDir";
@@ -15,5 +16,5 @@ export async function auditPackage(projectRoot: string, savePath: string) {
   // 3. 生成package.json和lock文件
   await generateLock(workDirPath, packageJson);
   // 4. 对工作目录进行审计
-  const auditResult = 1;
+  const auditResult = await audit(workDirPath, packageJson);
 }
