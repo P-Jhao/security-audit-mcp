@@ -25,7 +25,10 @@ export interface PackageInfoType {
  * @param {Node} node
  * @returns {Array<Set<string>>} 返回所有依赖链，每个链是一个字符串集合，每个字符串是一个节点名称
  */
-export function getDepChains(node: PackageInfoType, globalNodeMap: object) {
+export function getDepChains(
+  node: PackageInfoType,
+  globalNodeMap: Record<string, PackageInfoType>
+) {
   // 存储所有找到的依赖链
   const chains: any[] = [];
 

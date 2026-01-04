@@ -1,8 +1,8 @@
-import { audit } from "../audit";
-import { generateLock } from "../generateLock";
-import { parseProject } from "../parseProject";
-import { render } from "../render";
-import { createWorkDir, deleteWorkDir } from "../workDir";
+import { audit } from "../audit/index.js";
+import { generateLock } from "../generateLock/index.js";
+import { parseProject } from "../parseProject/index.js";
+import { render } from "../render/index.js";
+import { createWorkDir, deleteWorkDir } from "../workDir/index.js";
 import fs from "fs";
 
 /**

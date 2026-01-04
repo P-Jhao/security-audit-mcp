@@ -1,6 +1,6 @@
 import ejs from "ejs";
 import { join } from "node:path";
-import { getDirname } from "../utils";
+import { getDirname } from "../utils/index.js";
 
 const templatePath = join(getDirname(import.meta.url), "./template/index.ejs");
 

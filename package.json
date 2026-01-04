@@ -2,10 +2,10 @@
   "name": "security-audit-mcp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/mcpServer.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && xcopy src\\render\\template dist\\render\\template\\ /E /I /Y",
     "dev:test": "npx tsx src/entry/test/index.ts"
   },
   "keywords": [],
@@ -13,7 +13,9 @@
   "license": "ISC",
   "packageManager": "pnpm@10.24.0",
   "devDependencies": {
-    "@types/node": "^25.0.3"
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^25.0.3",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.25.1",

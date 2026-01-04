@@ -1,4 +1,4 @@
-import { renderMarkdown } from "./markdom";
+import { renderMarkdown } from "./markdom.js";
 
 interface AuditResult {
   summary: any;

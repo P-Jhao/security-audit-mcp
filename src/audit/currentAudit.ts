@@ -1,6 +1,8 @@
-import { remoteAudit } from "./remoteAudit";
+import { remoteAudit } from "./remoteAudit.js";
 
-const severityLevelsMap = {
+type SeverityLevel = "info" | "low" | "moderate" | "high" | "critical";
+
+const severityLevelsMap: Record<SeverityLevel, number> = {
   info: 0,
   low: 1,
   moderate: 2,
@@ -43,7 +45,10 @@ export async function currentAudit(name: string, version: string) {
       range: advisory.vulnerable_versions,
     };
     // 更新最大严重性
-    if (severityLevelsMap[problem.severity] > severityLevelsMap[maxSeverity]) {
+    if (
+      severityLevelsMap[problem.severity as SeverityLevel] >
+      severityLevelsMap[maxSeverity as SeverityLevel]
+    ) {
       maxSeverity = problem.severity;
     }
     return problem;

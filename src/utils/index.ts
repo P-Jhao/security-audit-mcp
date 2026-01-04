@@ -29,9 +29,10 @@ export async function runCommand(cmd: string, cwd: string) {
       encoding: "utf-8",
     });
     return stdout.stdout.toString();
-  } catch (error) {
-    if (error.stdout) {
-      return error.stdout.toString();
+  } catch (error: unknown) {
+    const err = error as { stdout?: Buffer };
+    if (err.stdout) {
+      return err.stdout.toString();
     }
     throw error;
   }

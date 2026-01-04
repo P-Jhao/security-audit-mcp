@@ -2,10 +2,12 @@ import {
   getDepChains,
   type PackageInfoType,
   type AuditResultType,
-} from "./getDepChains";
+} from "./getDepChains.js";
+
+type SeverityLevel = "critical" | "high" | "moderate" | "low";
 
 function _normalizeVulnerabilities(auditResult: AuditResultType) {
-  const result = {
+  const result: Record<SeverityLevel, any[]> = {
     critical: [],
     high: [],
     moderate: [],
@@ -15,15 +17,15 @@ function _normalizeVulnerabilities(auditResult: AuditResultType) {
     const packageInfo = auditResult.vulnerabilities[key];
     const normalizePackage = _normalizePackage(packageInfo);
     if (normalizePackage) {
-      result[normalizePackage.severity].push(normalizePackage);
+      result[normalizePackage.severity as SeverityLevel].push(normalizePackage);
     }
   }
   return result;
 
   function _normalizePackage(packageInfo: PackageInfoType) {
     const { via = [] } = packageInfo;
-    //只关注自身的问题，来源于其他包的问题不关注
-    const validVia = via.filter((item) => typeof item === "object");
+    // 只关注自身的问题，来源于其他包的问题不关注
+    const validVia = via.filter((item: unknown) => typeof item === "object");
     if (validVia.length === 0) return null;
     const info = {
       name: packageInfo.name,

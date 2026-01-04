@@ -1,6 +1,6 @@
-import { currentAudit } from "./currentAudit";
-import { normalizeAuditResult } from "./normalizeAuditResult";
-import { npmAudit } from "./npmAudit";
+import { currentAudit } from "./currentAudit.js";
+import { normalizeAuditResult } from "./normalizeAuditResult.js";
+import { npmAudit } from "./npmAudit.js";
 
 export async function audit(workDirPath: string, packageJson: any) {
   // 1. 调用npm audit获取审计结果
@@ -11,7 +11,9 @@ export async function audit(workDirPath: string, packageJson: any) {
   // 添加当前工程的审计结果（针对fork）
   const current = await currentAudit(packageJson.name, packageJson.version);
   if (current) {
-    normalizeResult.vulnerabilities[current.severity].unshift(current);
+    (normalizeResult.vulnerabilities as Record<string, any[]>)[
+      current.severity
+    ].unshift(current);
   }
   //添加汇总信息
   normalizeResult.summary = {

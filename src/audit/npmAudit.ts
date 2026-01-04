@@ -1,4 +1,4 @@
-import { runCommand } from "../utils";
+import { runCommand } from "../utils/index.js";
 
 export async function npmAudit(workDirPath: string) {
   // 强制使用官方 npm registry，因为镜像源不支持 audit API
