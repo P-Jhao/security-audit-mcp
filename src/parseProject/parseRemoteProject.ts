@@ -51,21 +51,39 @@ function parseGithubUrl(url: string) {
 }
 
 async function getPackageJsonUrl({ owner, repo, path }: GitInfo) {
-  //某个版本号，tags页
   if (path.startsWith("/tree/")) {
     const pathParts = path.split("/").filter(Boolean);
-    path = `tags/${pathParts[1]}`;
+    const ref = pathParts[1];
+    // 先尝试作为分支，失败再尝试作为 tag
+    const headsUrl = `https://raw.githubusercontent.com/${owner}/${repo}/refs/heads/${ref}/package.json`;
+    const tagsUrl = `https://raw.githubusercontent.com/${owner}/${repo}/refs/tags/${ref}/package.json`;
+
+    const headsRes = await fetch(headsUrl, { method: "HEAD" });
+    if (headsRes.ok) {
+      return headsUrl;
+    }
+    return tagsUrl;
   } else {
-    //branch页
+    // 默认分支，通过 API 获取
     const url = `https://api.github.com/repos/${owner}/${repo}`;
-    const info = await fetch(url).then((res) => res.json());
-    path = `heads/${info.default_branch}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`GitHub API 请求失败: ${res.status} ${res.statusText}`);
+    }
+    const info = await res.json();
+    const branch = info.default_branch;
+    return `https://raw.githubusercontent.com/${owner}/${repo}/refs/heads/${branch}/package.json`;
   }
-  return `https://raw.githubusercontent.com/${owner}/${repo}/${path}/package.json`;
 }
 
 export async function parseRemoteProject(githubUrl: string) {
   const gitInfo = parseGithubUrl(githubUrl);
   const packageJsonUrl = await getPackageJsonUrl(gitInfo);
-  return await fetch(packageJsonUrl).then((res) => res.json());
+  const res = await fetch(packageJsonUrl);
+  if (!res.ok) {
+    throw new Error(
+      `获取 package.json 失败: ${res.status} ${res.statusText}\nURL: ${packageJsonUrl}`
+    );
+  }
+  return await res.json();
 }
