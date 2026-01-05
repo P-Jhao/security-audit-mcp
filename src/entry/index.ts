@@ -13,16 +13,20 @@ import fs from "fs";
 export async function auditPackage(projectRoot: string, savePath: string) {
   // 1. 创建工作目录，用于保存工作期间的临时文件
   const workDirPath = await createWorkDir();
-  // 2. 解析项目，向工作目录添加package.json
-  const packageJson = await parseProject(projectRoot);
-  // 3. 生成package.json和lock文件
-  await generateLock(workDirPath, packageJson);
-  // 4. 对工作目录进行审计
-  const auditResult = await audit(workDirPath, packageJson);
-  // 5. 将审计结果渲染成markdom格式
-  const renderdResult = await render(auditResult, packageJson);
-  // 6. 删除工作目录
-  await deleteWorkDir(workDirPath);
-  // 7. 将结果保存至指定目录
-  await fs.promises.writeFile(savePath, renderdResult as any);
+
+  try {
+    // 2. 解析项目，向工作目录添加package.json
+    const packageJson = await parseProject(projectRoot);
+    // 3. 生成package.json和lock文件
+    await generateLock(workDirPath, packageJson);
+    // 4. 对工作目录进行审计
+    const auditResult = await audit(workDirPath, packageJson);
+    // 5. 将审计结果渲染成markdom格式
+    const renderdResult = await render(auditResult, packageJson);
+    // 6. 将结果保存至指定目录
+    await fs.promises.writeFile(savePath, renderdResult as any);
+  } finally {
+    // 7. 确保删除工作目录（无论成功或失败）
+    await deleteWorkDir(workDirPath);
+  }
 }
