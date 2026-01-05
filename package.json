@@ -5,8 +5,7 @@
   "main": "dist/mcpServer.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && xcopy src\\render\\template dist\\render\\template\\ /E /I /Y",
-    "dev:test": "npx tsx src/entry/test/index.ts"
+    "build": "tsc && xcopy src\\render\\template dist\\render\\template\\ /E /I /Y"
   },
   "keywords": [],
   "author": "",
