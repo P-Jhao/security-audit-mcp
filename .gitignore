@@ -5,6 +5,9 @@ node_modules/
 dist/
 build/
 
+# 部署目录
+deploy/
+
 # 日志
 *.log
 

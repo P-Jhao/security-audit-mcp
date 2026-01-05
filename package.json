@@ -5,7 +5,8 @@
   "main": "dist/mcpServer.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && xcopy src\\render\\template dist\\render\\template\\ /E /I /Y"
+    "build": "tsc && xcopy src\\render\\template dist\\render\\template\\ /E /I /Y",
+    "deploy": "pnpm build && node deploy.js"
   },
   "keywords": [],
   "author": "",

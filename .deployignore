@@ -1,0 +1,26 @@
+# 源代码（不需要上传）
+src/
+
+# 开发依赖
+.vscode/
+.git/
+
+# 构建配置
+tsconfig.json
+
+# 临时文件
+work/
+
+# 日志
+*.log
+
+# 环境变量
+.env
+.env.local
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 部署忽略文件本身
+.deployignore
